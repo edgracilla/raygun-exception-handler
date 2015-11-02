@@ -8,10 +8,10 @@ var platform = require('./platform'),
  */
 platform.on('error', function (error) {
     raygunClient.send(error, {}, function(response){
-        if(response) return;
+        if (response.statusCode === 202) return;
 
-        console.error('Error on Raygun.', response);
-        platform.handleException(response);
+        console.error('Error on Raygun.', response.statusMessage);
+        platform.handleException(new Error(response.statusMessage));
     });
 });
 

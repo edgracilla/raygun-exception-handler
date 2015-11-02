@@ -1,6 +1,6 @@
 'use strict';
 
-const apiKey = 'WAb7P5dqZwOEh0+5B+DCYw==';
+const API_KEY = 'WAb7P5dqZwOEh0+5B+DCYw==';
 
 var cp     = require('child_process'),
 	assert = require('assert'),
@@ -10,9 +10,9 @@ describe('Exception Handler', function () {
 	this.slow(5000);
 
 	after('terminate child process', function () {
-        setTimeout(function(){
-            exceptionHandler.kill('SIGKILL');
-        },5000);
+		setTimeout(function () {
+			exceptionHandler.kill('SIGKILL');
+		}, 5000);
 	});
 
 	describe('#spawn', function () {
@@ -34,7 +34,7 @@ describe('Exception Handler', function () {
 				type: 'ready',
 				data: {
 					options: {
-						api_key:apiKey
+						api_key: API_KEY
 					}
 				}
 			}, function (error) {
