@@ -1,7 +1,7 @@
 {
   "name": "raygun-exception-handler",
   "description": "Raygun Exception Handler plugin and support for the Reekoh IoT Platform.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Reekoh, Inc.",
   "main": "app.js",
   "scripts": {
