@@ -1,5 +1,5 @@
 {
-	"api_key": {
+	"apiKey": {
 		"label": "API Key",
 		"type": "Password",
 		"required": true,
