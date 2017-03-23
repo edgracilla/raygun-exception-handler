@@ -1,34 +1,29 @@
-'use strict';
+'use strict'
 
-var platform = require('./platform'),
-	raygunClient;
+const reekoh = require('reekoh')
+const _plugin = new reekoh.plugins.ExceptionLogger()
 
-/*
- * Listen for the error event.
- */
-platform.on('error', function (error) {
-    raygunClient.send(error, {}, function(response){
-        if (response.statusCode === 202) return;
+let raygunClient =  null
 
-        console.error('Error on Raygun.', response.statusMessage);
-        platform.handleException(new Error(response.statusMessage));
-    });
-});
+_plugin.on('exception', (error) => {
+  raygunClient.send(error, {}, (response) => {
+    if (response.statusCode === 202) return
 
-/*
- * Event to listen to in order to gracefully release all resources bound to this service.
- */
-platform.on('close', function () {
-	platform.notifyClose();
-});
+    console.error('Error on Raygun.', response.statusMessage)
+    _plugin.logException(new Error(response.statusMessage))
+  })
+  _plugin.log(JSON.stringify({
+    title: 'Exception sent to Raygun',
+    data: {message: error.message, stack: error.stack, name: error.name}
+  }))
+})
 
-/*
- * Listen for the ready event.
- */
-platform.once('ready', function (options) {
-	var raygun = require('raygun');
-	raygunClient = new raygun.Client().init({ apiKey: options.api_key });
+_plugin.once('ready', () => {
+  let raygun = require('raygun')
+  raygunClient = new raygun.Client().init({ apiKey: _plugin.config.apiKey})
 
-	platform.log('Raygun Exception Handler Initialized.');
-	platform.notifyReady();
-});
+  _plugin.log('Raygun Exception Handler Initialized.')
+  _plugin.emit('init')
+})
+
+module.exports = _plugin
