@@ -3,7 +3,6 @@ kind: Plugin
 metadata:
   name: Raygun Exception Handler
   description: Raygun Exception Handler plugin and support for the Reekoh IoT Platform
-  documentation: README.md
   icon: asset/icon/reekoh200x200.png
   signupLink: https://myservice.com/signup # ??
   type: Logger
@@ -12,15 +11,15 @@ metadata:
     - logger
     - exception-logger
     - raygun
-  config:
-    apiKey:
-      label: API Key
-      type: Password
-      required: true
-      help: Please specify your Raygun.io API key
-      maxLength: 1000
 
   release:
     version: 1.0.0
     notes: path/to/RELEASENOTESv1.0.0.md # ??
-    image: path/to/docker/image # ??
+    documentation: README.md
+    config:
+      apiKey:
+        label: API Key
+        type: Password
+        required: true
+        help: Please specify your Raygun.io API key
+        maxLength: 1000
